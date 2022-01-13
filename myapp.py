@@ -104,14 +104,7 @@ new_case_ind_panel = Panel(child=new_case_ind, title='Kasus Baru')
 tabs = Tabs(tabs=[tot_case_ind_panel, new_case_ind_panel])
 
 
-######################################################################
-########### Plotting for covid 19 in Indonesia Ends Here #############
-######################################################################
 
-
-######################################################################
-######### Plotting for covid 19 in Indonesian Island Starts Here #####
-######################################################################
 
 
 ###### CDS Pulau Jawa dan Nusa Tenggara #######
@@ -144,10 +137,15 @@ sulawesi['Island'] = 'Sulawesi'
 sulawesi_cds = ColumnDataSource(sulawesi)
 
 ###### CDS Papua dan Maluku #####
-papua = df[(df['Island'] == 'Papua') | (df['Island'] == 'Maluku')]
+papua = df[df['Island'] == 'Papua' ]
 papua = papua.groupby(['Date']).sum().reset_index()
-papua['Island'] = 'Papua dan Maluku'
+papua['Island'] = 'Papua'
 papua_cds = ColumnDataSource(papua)
+
+maluku = df[df['Island'] == 'Nusa Tenggara']
+maluku = maluku.groupby(['Date']).sum().reset_index()
+maluku['Island'] = 'Maluku'
+maluku_cds = ColumnDataSource(maluku)
 
 # # Create and configure the figure
 tot_case = figure(x_axis_type='datetime',
@@ -181,8 +179,11 @@ tot_case.line('Date', 'TotalCases',
               color='yellow', legend_label='Total Kasus Pulau Sulawesi',
               source=sulawesi_cds)
 tot_case.line('Date', 'TotalCases',
-              color='purple', legend_label='Total Kasus Pulau Papua dan Maluku',
+              color='purple', legend_label='Total Kasus Pulau Papua',
               source=papua_cds)
+tot_case.line('Date', 'TotalCases',
+              color='gray', legend_label='Total Kasus Pulau Maluku',
+              source=maluku_cds)
 
 new_case.line('Date', 'NewCases',
               color='green', legend_label='Kasus Baru Pulau Sumatera',
@@ -202,6 +203,9 @@ new_case.line('Date', 'NewCases',
 new_case.line('Date', 'NewCases',
               color='purple', legend_label='Kasus Baru Pulau Papua dan Maluku',
               source=papua_cds)
+new_case.line('Date', 'NewCases',
+              color='gray', legend_label='Kasus Baru Pulau Maluku',
+              source=maluku_cds)
 
 # # Move the legend to the upper left corner
 tot_case.legend.location = 'top_left'
