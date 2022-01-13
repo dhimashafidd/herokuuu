@@ -114,11 +114,16 @@ tabs = Tabs(tabs=[tot_case_ind_panel, new_case_ind_panel])
 ######################################################################
 
 
-###### CDS Pulau Jawa dan Nusa Teanggara #######
-jawa = df[(df['Island'] == 'Jawa') | (df['Island'] == 'Nusa Tenggara')]
+###### CDS Pulau Jawa dan Nusa Tenggara #######
+jawa = df[df['Island'] == 'Jawa']
 jawa = jawa.groupby(['Date']).sum().reset_index()
-jawa['Island'] = 'Jawa dan Nusa Tenggara'
+jawa['Island'] = 'Jawa'
 jawa_cds = ColumnDataSource(jawa)
+
+nusa = df[df['Island'] == 'Nusa Tenggara']
+nusa = nusa.groupby(['Date']).sum().reset_index()
+nusa['Island'] = 'Nusa Tenggara'
+nusa_cds = ColumnDataSource(nusa)
 
 ###### CDS Sumatera #######
 sumatera = df[df['Island'] == 'Sumatera']
@@ -164,8 +169,11 @@ tot_case.line('Date', 'TotalCases',
               color='green', legend_label='Total Kasus Pulau Sumatera',
               source=sumatera_cds)
 tot_case.line('Date', 'TotalCases',
-              color='blue', legend_label='Total Kasus Pulau Jawa dan Nusa Tenggara',
+              color='blue', legend_label='Total Kasus Pulau Jawa',
               source=jawa_cds)
+tot_case.line('Date', 'TotalCases',
+              color='pink', legend_label='Total Kasus Pulau Nusa',
+              source=nusa_cds)
 tot_case.line('Date', 'TotalCases',
               color='black', legend_label='Total Kasus Pulau Kalimantan',
               source=kalimantan_cds)
@@ -180,8 +188,11 @@ new_case.line('Date', 'NewCases',
               color='green', legend_label='Kasus Baru Pulau Sumatera',
               source=sumatera_cds)
 new_case.line('Date', 'NewCases',
-              color='blue', legend_label='Kasus Baru Pulau Jawa dan Nusa Tenggara',
+              color='blue', legend_label='Kasus Baru Pulau Jawa',
               source=jawa_cds)
+new_case.line('Date', 'NewCases',
+              color='pink', legend_label='Kasus Baru Pulau Nusa',
+              source=nusa_cds)
 new_case.line('Date', 'NewCases',
               color='black', legend_label='Kasus Baru Pulau Kalimantan',
               source=kalimantan_cds)
