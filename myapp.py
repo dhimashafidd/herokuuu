@@ -1,6 +1,7 @@
 import pandas as pd
 
-# Library-library Bokehfrom bokeh.plotting import figure, show, curdoc
+# Library-library Bokeh
+from bokeh.plotting import figure, show, curdoc
 from bokeh.io import output_file, output_notebook
 from bokeh.models import ColumnDataSource, HoverTool, Div
 from bokeh.models.widgets import Tabs, Panel
