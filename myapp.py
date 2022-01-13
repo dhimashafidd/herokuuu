@@ -55,11 +55,11 @@ new_case_ind.yaxis.formatter = NumeralTickFormatter(format="00")
 
 # Definisikan line / proses render line
 total_case_ind.line('Date', 'TotalCases',
-                  color='#CE1141', legend_label='Total Kasus di Seluruh Indonesia', line_width=3, 
+                  color='#CE1141', legend_label='Total Kasus di Seluruh Indonesia', line_width=2, 
                   source=indonesia_case)
 
 new_case_ind.line('Date', 'NewCases',
-                  color='#CE1141', legend_label='Kasus Terkini di Seluruh Indonesia', line_width=3, 
+                  color='#CE1141', legend_label='Kasus Terkini di Seluruh Indonesia', line_width=2, 
                   source=indonesia_case)
 
 # Definisikan legend dengan lokasi atas kiri
@@ -150,12 +150,12 @@ maluku_cds = ColumnDataSource(maluku)
 # Definisikan figure untuk dijadikan sebagai diagram 
 total_case = figure(x_axis_type='datetime',
                   plot_height=500, plot_width=800,
-                  title='Total Kasus Covid', line_width=3, 
+                  title='Total Kasus Covid', 
                   x_axis_label='Per Tanggal', y_axis_label='Jumlah Kejadian')
 
 new_case = figure(x_axis_type='datetime',
                   plot_height=500, plot_width=800,
-                  title='Kasus Terkini', line_width=3, 
+                  title='Kasus Terkini', 
                   x_axis_label='Per Tanggal', y_axis_label='Jumlah Kejadian')
 
 # Definisikan y-axis
