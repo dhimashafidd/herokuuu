@@ -42,12 +42,12 @@ indonesia_case = ColumnDataSource(indonesia)
 total_case_ind = figure(x_axis_type='datetime',
                       plot_height=500, plot_width=800,
                       title='Total Kasus Covid',
-                      x_axis_label='Tanggal', y_axis_label='Total Kasus')
+                      x_axis_label='Per Tanggal', y_axis_label='Jumlah Kejadian')
 
 new_case_ind = figure(x_axis_type='datetime',
                       plot_height=500, plot_width=800,
                       title='Kasus Terkini',
-                      x_axis_label='Tanggal', y_axis_label='Kasus Terkini')
+                      x_axis_label='PerTanggal', y_axis_label='Jumlah Kejadian')
 
 # Definisikan y-axis
 total_case_ind.yaxis.formatter = NumeralTickFormatter(format="00")
@@ -151,12 +151,12 @@ maluku_cds = ColumnDataSource(maluku)
 total_case = figure(x_axis_type='datetime',
                   plot_height=500, plot_width=800,
                   title='Total Kasus Covid',
-                  x_axis_label='Tanggal', y_axis_label='Total Kasus')
+                  x_axis_label='Per Tanggal', y_axis_label='Jumlah Kejadian')
 
 new_case = figure(x_axis_type='datetime',
                   plot_height=500, plot_width=800,
                   title='Kasus Terkini',
-                  x_axis_label='Tanggal', y_axis_label='Kasus Terkini')
+                  x_axis_label='Per Tanggal', y_axis_label='Jumlah Kejadian')
 
 # Definisikan y-axis
 total_case.yaxis.formatter = NumeralTickFormatter(format="00")
