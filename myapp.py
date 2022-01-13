@@ -1,6 +1,6 @@
 import pandas as pd
 
-# Library-library Bokeh
+# Bokeh libraries
 from bokeh.plotting import figure, show, curdoc
 from bokeh.io import output_file, output_notebook
 from bokeh.models import ColumnDataSource, HoverTool, Div
@@ -23,19 +23,24 @@ df = df.rename(columns={"New Cases": "NewCases",
                           "Total Recovered": "TotalRecovered",
                           "Total Deaths": "TotalDeaths"})
 
-# Proses output file data covid_19_indonesia_time_series_all.csv
+# Output to file
 output_notebook()
 output_file('Covid-Indonesia.html',
             title='Covid Indonesia')
 
 
-# Kasus untuk seluruh Indonesia
+######################################################################
+########### Plotting for covid 19 in Indonesia Starts Here ###########
+######################################################################
+
+
+###### CDS Seluruh Indonesia #######
 indonesia = df[df['Location'] == 'Indonesia']
 indonesia['Island'] = 'Indonesia'
 indonesia_cds = ColumnDataSource(indonesia)
 
 
-# Definisikan figure untuk dijadikan sebagai plot diagram
+# # Create and configure the figure for covid case in Indonesia
 tot_case_ind = figure(x_axis_type='datetime',
                       plot_height=500, plot_width=800,
                       title='Total Kasus Covid',
@@ -46,11 +51,11 @@ new_case_ind = figure(x_axis_type='datetime',
                       title='Kasus Baru',
                       x_axis_label='Tanggal', y_axis_label='Kasus Baru')
 
-# Definisikan y-axis
+# # Format the y-axis
 tot_case_ind.yaxis.formatter = NumeralTickFormatter(format="00")
 new_case_ind.yaxis.formatter = NumeralTickFormatter(format="00")
 
-# Definisikan line / proses render line
+# # Render the case as lines
 tot_case_ind.line('Date', 'TotalCases',
                   color='#CE1141', legend_label='Total Kasus di Seluruh Indonesia',
                   source=indonesia_cds)
@@ -59,11 +64,11 @@ new_case_ind.line('Date', 'NewCases',
                   color='#CE1141', legend_label='Kasus Baru di Seluruh Indonesia',
                   source=indonesia_cds)
 
-# Definisikan legend dengan lokasi atas kiri
+# # Move the legend to the upper left corner
 tot_case_ind.legend.location = 'top_left'
 new_case_ind.legend.location = 'top_left'
 
-# Definisikan tooltips
+# Format the tooltip
 tooltips1 = [
     ('Tanggal', '@Date{%F}'),
     ('Total Kasus', '@TotalCases'),
@@ -74,7 +79,7 @@ tooltips2 = [
     ('Total Kasus', '@NewCases'),
 ]
 
-# Defnisikan renderer sebagai hover
+# Configure a renderer to be used upon hover
 hover_glyph = tot_case_ind.circle(x='Date', y='TotalCases', source=indonesia_cds,
                                   size=5, alpha=0,
                                   hover_fill_color='black', hover_alpha=0.5)
@@ -82,65 +87,64 @@ hover_glyph2 = new_case_ind.circle(x='Date', y='NewCases', source=indonesia_cds,
                                    size=5, alpha=0,
                                    hover_fill_color='black', hover_alpha=0.5)
 
-# Masukkan hover ke diagram / figure
+# Add the HoverTool to the figure
 tot_case_ind.add_tools(HoverTool(tooltips=tooltips1, formatters={
                        '@Date': 'datetime'}, renderers=[hover_glyph, hover_glyph2]))
 new_case_ind.add_tools(HoverTool(tooltips=tooltips2, formatters={
                        '@Date': 'datetime'}, renderers=[hover_glyph, hover_glyph2]))
 
-# Konfigurasi ukuran plot / diagram
+# Increase the plot widths
 tot_case_ind.plot_width = new_case_ind.plot_width = 1000
 
-# Definisikan dua panel berisi total kasus dan kasus baru
+# Create two panels, one for each conference
 tot_case_ind_panel = Panel(child=tot_case_ind, title='Total Kasus')
 new_case_ind_panel = Panel(child=new_case_ind, title='Kasus Baru')
 
-# Masukkan panel pada tabs button
+# Assign the panels to Tabs
 tabs = Tabs(tabs=[tot_case_ind_panel, new_case_ind_panel])
 
 
-## Plotting Kasus Covid-19 di seluruh Indonesia Selesai
+######################################################################
+########### Plotting for covid 19 in Indonesia Ends Here #############
+######################################################################
 
 
-## Plotting Kasus Covid-19 untuk setiap pulau di Indonesia 
+######################################################################
+######### Plotting for covid 19 in Indonesian Island Starts Here #####
+######################################################################
 
 
-# Kasus untuk Pulau Jawa dan Nusa Tenggara
-jawa = df[(df['Island'] == 'Jawa')]
+###### CDS Pulau Jawa dan Nusa Teanggara #######
+jawa = df[(df['Island'] == 'Jawa') | (df['Island'] == 'Nusa Tenggara')]
 jawa = jawa.groupby(['Date']).sum().reset_index()
 jawa['Island'] = 'Jawa dan Nusa Tenggara'
 jawa_cds = ColumnDataSource(jawa)
 
-nusa = df[df['Island'] == 'Nusa Tenggara']
-nusa = nusa.groupby(['Date']).sum().reset_index()
-nusa['Island'] = 'Nusa Tenggara'
-nusa_cds = ColumnDataSource(nusa)
-
-# Kasus untuk Pulau Sumatera
+###### CDS Sumatera #######
 sumatera = df[df['Island'] == 'Sumatera']
 sumatera = sumatera.groupby(['Date']).sum().reset_index()
 sumatera['Island'] = 'Sumatera'
 sumatera_cds = ColumnDataSource(sumatera)
 
-# Kasus untuk Pulau Kalimantan
+###### CDS Kalimantan #######
 Kalimantan = df[df['Island'] == 'Kalimantan']
 Kalimantan = Kalimantan.groupby(['Date']).sum().reset_index()
 Kalimantan['Island'] = 'Kalimantan'
 kalimantan_cds = ColumnDataSource(Kalimantan)
 
-# Kasus untuk Pulau Sulawesi
+###### CDS Sulawesi ########
 sulawesi = df[df['Island'] == 'Sulawesi']
 sulawesi = sulawesi.groupby(['Date']).sum().reset_index()
 sulawesi['Island'] = 'Sulawesi'
 sulawesi_cds = ColumnDataSource(sulawesi)
 
-# Kasus untuk Pulau Papua dan Maluku
+###### CDS Papua dan Maluku #####
 papua = df[(df['Island'] == 'Papua') | (df['Island'] == 'Maluku')]
 papua = papua.groupby(['Date']).sum().reset_index()
 papua['Island'] = 'Papua dan Maluku'
 papua_cds = ColumnDataSource(papua)
 
-# Definisikan figure untuk dijadikan sebagai diagram
+# # Create and configure the figure
 tot_case = figure(x_axis_type='datetime',
                   plot_height=500, plot_width=800,
                   title='Total Kasus Covid',
@@ -151,20 +155,17 @@ new_case = figure(x_axis_type='datetime',
                   title='Kasus Baru',
                   x_axis_label='Tanggal', y_axis_label='Kasus Baru')
 
-# Definisikan y-axis
+# # Format the y-axis
 tot_case.yaxis.formatter = NumeralTickFormatter(format="00")
 new_case.yaxis.formatter = NumeralTickFormatter(format="00")
 
-# Definisikan line / proses render line
+# # Render the case as lines
 tot_case.line('Date', 'TotalCases',
               color='green', legend_label='Total Kasus Pulau Sumatera',
               source=sumatera_cds)
 tot_case.line('Date', 'TotalCases',
-              color='blue', legend_label='Total Kasus Pulau Jawa',
+              color='blue', legend_label='Total Kasus Pulau Jawa dan Nusa Tenggara',
               source=jawa_cds)
-tot_case.line('Date', 'TotalCases',
-              color='pink', legend_label='Total Kasus Pulau Nusa Tenggara',
-              source=nusa_cds)
 tot_case.line('Date', 'TotalCases',
               color='black', legend_label='Total Kasus Pulau Kalimantan',
               source=kalimantan_cds)
@@ -179,11 +180,8 @@ new_case.line('Date', 'NewCases',
               color='green', legend_label='Kasus Baru Pulau Sumatera',
               source=sumatera_cds)
 new_case.line('Date', 'NewCases',
-              color='blue', legend_label='Kasus Baru Pulau Jawa',
+              color='blue', legend_label='Kasus Baru Pulau Jawa dan Nusa Tenggara',
               source=jawa_cds)
-new_case.line('Date', 'NewCases',
-              color='pink', legend_label='Kasus Baru Pulau Nusa Tenggara',
-              source=nusa_cds)
 new_case.line('Date', 'NewCases',
               color='black', legend_label='Kasus Baru Pulau Kalimantan',
               source=kalimantan_cds)
@@ -194,11 +192,11 @@ new_case.line('Date', 'NewCases',
               color='purple', legend_label='Kasus Baru Pulau Papua dan Maluku',
               source=papua_cds)
 
-# Definisikan legend dengan lokasi atas kiri
+# # Move the legend to the upper left corner
 tot_case.legend.location = 'top_left'
 new_case.legend.location = 'top_left'
 
-# Definisikan tooltips
+# Format the tooltip
 tooltips3 = [
     ('Pulau', '@Island'),
     ('Tanggal', '@Date{%F}'),
@@ -211,40 +209,40 @@ tooltips4 = [
     ('Total Kasus', '@NewCases'),
 ]
 
-# Masukkan hover ke diagram / figure
+# Add the HoverTool to the figure
 tot_case.add_tools(HoverTool(tooltips=tooltips3,
                              formatters={'@Date': 'datetime'}))
 new_case.add_tools(HoverTool(tooltips=tooltips4,
                              formatters={'@Date': 'datetime'}))
 
-# Konfigurasi ukuran plot / diagram
+# Increase the plot widths
 tot_case.plot_width = new_case.plot_width = 1000
 
-# Definisikan dua panel berisi total kasus dan kasus baru
+# Create two panels, one for each conference
 tot_case_panel = Panel(child=tot_case, title='Total Kasus')
 new_case_panel = Panel(child=new_case, title='Kasus Baru')
 
-# Masukkan panel pada tabs button
+# Assign the panels to Tabs
 tabs2 = Tabs(tabs=[tot_case_panel, new_case_panel])
 
-# Tambahkan judul untuk Figure 1 yaitu Jumlah Kasus Covid-19 di Seluruh Indonesia
+# Add a title for the covid-19 in Indonesia visualization using Div
 html = """<h3>Persebaran Covid-19 Di Indonesia</h3>
 <b><i>2020-2021</i>
 <br>
 """
 
-# Tambahkan judul untuk Figure 2 yaitu Jumlah Kasus Covid-19 untuk setiap Pulau di Indonesia
+# Add a title for the covid-19 in Indonesian Island visualization using Div
 html2 = """<h3>Perbandingan Persebaran Covid-19 Di Pulau-Pulau Indonesia</h3>
 <b><i>2020-2021</i>
 <br>
 """
 
-# Tambahkan spasi satu line
+# creating vertical space
 space = "<br>"
 
 sup_title1 = Div(text=html)
 sup_title2 = Div(text=html2)
 spacing = Div(text=space)
 
-# Lakukan running untuk hasil akhir
+# This final command is required to launch the plot in the browser
 curdoc().add_root(column(sup_title1, tabs, spacing, sup_title2, tabs2))
