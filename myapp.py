@@ -201,7 +201,7 @@ new_case.line('Date', 'NewCases',
               color='yellow', legend_label='Kasus Baru Pulau Sulawesi',
               source=sulawesi_cds)
 new_case.line('Date', 'NewCases',
-              color='purple', legend_label='Kasus Baru Pulau Papua dan Maluku',
+              color='purple', legend_label='Kasus Baru Pulau Papua',
               source=papua_cds)
 new_case.line('Date', 'NewCases',
               color='gray', legend_label='Kasus Baru Pulau Maluku',
