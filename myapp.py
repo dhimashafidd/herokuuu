@@ -95,11 +95,11 @@ new_case.add_tools(HoverTool(tooltips=tooltips2, formatters={
 total_case.plot_width = new_case_ind.plot_width = 1000
 
 # Definisikan dua panel berisi total kasus dan kasus baru
-total_case_panel = Panel(child=tot_case_ind, title='Total Kasus')
-new_case_panel = Panel(child=new_case_ind, title='Kasus Baru')
+total_case_panel = Panel(child=total_case, title='Total Kasus')
+new_case_panel = Panel(child=new_case, title='Kasus Baru')
 
 # Masukkan panel pada tabs button
-tabs = Tabs(tabs=[tot_case_ind_panel, new_case_ind_panel])
+tabs = Tabs(tabs=[total_case_panel, new_case_panel])
 
 
 
