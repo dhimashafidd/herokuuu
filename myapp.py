@@ -35,7 +35,7 @@ output_file('Covid-Indonesia.html',
 # Kasus untuk seluruh Indonesia
 indonesia = df[df['Location'] == 'Indonesia']
 indonesia['Island'] = 'Indonesia'
-indonesia_cds = ColumnDataSource(indonesia)
+indonesia_case = ColumnDataSource(indonesia)
 
 
 # Definisikan figure untuk dijadikan sebagai plot diagram
@@ -56,11 +56,11 @@ new_case_ind.yaxis.formatter = NumeralTickFormatter(format="00")
 # Definisikan line / proses render line
 tot_case_ind.line('Date', 'TotalCases',
                   color='#CE1141', legend_label='Total Kasus di Seluruh Indonesia',
-                  source=indonesia_cds)
+                  source=indonesia_case)
 
 new_case_ind.line('Date', 'NewCases',
                   color='#CE1141', legend_label='Kasus Baru di Seluruh Indonesia',
-                  source=indonesia_cds)
+                  source=indonesia_case)
 
 # Definisikan legend dengan lokasi atas kiri
 tot_case_ind.legend.location = 'top_left'
