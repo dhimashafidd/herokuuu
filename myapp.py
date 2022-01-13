@@ -29,7 +29,8 @@ output_file('Covid-Indonesia.html',
             title='Covid Indonesia')
 
 
-# Kasus untuk seluruh Indonesiaindonesia = df[df['Location'] == 'Indonesia']
+# Kasus untuk seluruh Indonesia
+indonesia = df[df['Location'] == 'Indonesia']
 indonesia['Island'] = 'Indonesia'
 indonesia_cds = ColumnDataSource(indonesia)
 
