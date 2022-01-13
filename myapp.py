@@ -39,32 +39,32 @@ indonesia_case = ColumnDataSource(indonesia)
 
 
 # Definisikan figure untuk dijadikan sebagai plot diagram
-tot_case_ind = figure(x_axis_type='datetime',
+total_case = figure(x_axis_type='datetime',
                       plot_height=500, plot_width=800,
                       title='Total Kasus Covid',
                       x_axis_label='Tanggal', y_axis_label='Total Kasus')
 
-new_case_ind = figure(x_axis_type='datetime',
+new_case = figure(x_axis_type='datetime',
                       plot_height=500, plot_width=800,
                       title='Kasus Baru',
                       x_axis_label='Tanggal', y_axis_label='Kasus Baru')
 
 # Definisikan y-axis
-tot_case_ind.yaxis.formatter = NumeralTickFormatter(format="00")
-new_case_ind.yaxis.formatter = NumeralTickFormatter(format="00")
+total_case.yaxis.formatter = NumeralTickFormatter(format="00")
+new_case.yaxis.formatter = NumeralTickFormatter(format="00")
 
 # Definisikan line / proses render line
-tot_case_ind.line('Date', 'TotalCases',
+total_case.line('Date', 'TotalCases',
                   color='#CE1141', legend_label='Total Kasus di Seluruh Indonesia',
                   source=indonesia_case)
 
-new_case_ind.line('Date', 'NewCases',
+new_case.line('Date', 'NewCases',
                   color='#CE1141', legend_label='Kasus Baru di Seluruh Indonesia',
                   source=indonesia_case)
 
 # Definisikan legend dengan lokasi atas kiri
-tot_case_ind.legend.location = 'top_left'
-new_case_ind.legend.location = 'top_left'
+total_case.legend.location = 'top_left'
+new_case.legend.location = 'top_left'
 
 # Definisikan tooltips
 tooltips1 = [
@@ -78,25 +78,25 @@ tooltips2 = [
 ]
 
 # Defnisikan renderer sebagai hover
-hover_glyph = tot_case_ind.circle(x='Date', y='TotalCases', source=indonesia_case,
+hover_glyph = total_case.circle(x='Date', y='TotalCases', source=indonesia_case,
                                   size=5, alpha=0,
                                   hover_fill_color='black', hover_alpha=0.5)
-hover_glyph2 = new_case_ind.circle(x='Date', y='NewCases', source=indonesia_case,
+hover_glyph2 = new_case.circle(x='Date', y='NewCases', source=indonesia_case,
                                    size=5, alpha=0,
                                    hover_fill_color='black', hover_alpha=0.5)
 
 # Masukkan hover ke diagram / figure
-tot_case_ind.add_tools(HoverTool(tooltips=tooltips1, formatters={
+total_case.add_tools(HoverTool(tooltips=tooltips1, formatters={
                        '@Date': 'datetime'}, renderers=[hover_glyph, hover_glyph2]))
-new_case_ind.add_tools(HoverTool(tooltips=tooltips2, formatters={
+new_case.add_tools(HoverTool(tooltips=tooltips2, formatters={
                        '@Date': 'datetime'}, renderers=[hover_glyph, hover_glyph2]))
 
 # Konfigurasi ukuran plot / diagram
-tot_case_ind.plot_width = new_case_ind.plot_width = 1000
+total_case.plot_width = new_case_ind.plot_width = 1000
 
 # Definisikan dua panel berisi total kasus dan kasus baru
-tot_case_ind_panel = Panel(child=tot_case_ind, title='Total Kasus')
-new_case_ind_panel = Panel(child=new_case_ind, title='Kasus Baru')
+total_case_panel = Panel(child=tot_case_ind, title='Total Kasus')
+new_case_panel = Panel(child=new_case_ind, title='Kasus Baru')
 
 # Masukkan panel pada tabs button
 tabs = Tabs(tabs=[tot_case_ind_panel, new_case_ind_panel])
@@ -148,68 +148,68 @@ maluku['Island'] = 'Maluku'
 maluku_cds = ColumnDataSource(maluku)
 
 # Definisikan figure untuk dijadikan sebagai diagram 
-tot_case = figure(x_axis_type='datetime',
+total_case_figure = figure(x_axis_type='datetime',
                   plot_height=500, plot_width=800,
                   title='Total Kasus Covid',
                   x_axis_label='Tanggal', y_axis_label='Total Kasus')
 
-new_case = figure(x_axis_type='datetime',
+new_case_figure = figure(x_axis_type='datetime',
                   plot_height=500, plot_width=800,
                   title='Kasus Baru',
                   x_axis_label='Tanggal', y_axis_label='Kasus Baru')
 
 # Definisikan y-axis
-tot_case.yaxis.formatter = NumeralTickFormatter(format="00")
-new_case.yaxis.formatter = NumeralTickFormatter(format="00")
+total_case_figure.yaxis.formatter = NumeralTickFormatter(format="00")
+new_case_figure.yaxis.formatter = NumeralTickFormatter(format="00")
 
 # Definisikan line / proses render line
-tot_case.line('Date', 'TotalCases',
+total_case_figure.line('Date', 'TotalCases',
               color='green', legend_label='Total Kasus Pulau Sumatera',
               source=sumatera_cds)
-tot_case.line('Date', 'TotalCases',
+total_case_figure.line('Date', 'TotalCases',
               color='blue', legend_label='Total Kasus Pulau Jawa',
               source=jawa_cds)
-tot_case.line('Date', 'TotalCases',
+total_case_figure.line('Date', 'TotalCases',
               color='pink', legend_label='Total Kasus Pulau Nusa',
               source=nusa_cds)
-tot_case.line('Date', 'TotalCases',
+total_case_figure.line('Date', 'TotalCases',
               color='black', legend_label='Total Kasus Pulau Kalimantan',
               source=kalimantan_cds)
-tot_case.line('Date', 'TotalCases',
+total_case_figure.line('Date', 'TotalCases',
               color='yellow', legend_label='Total Kasus Pulau Sulawesi',
               source=sulawesi_cds)
-tot_case.line('Date', 'TotalCases',
+total_case_figure.line('Date', 'TotalCases',
               color='purple', legend_label='Total Kasus Pulau Papua',
               source=papua_cds)
-tot_case.line('Date', 'TotalCases',
+total_case_figure.line('Date', 'TotalCases',
               color='gray', legend_label='Total Kasus Pulau Maluku',
               source=maluku_cds)
 
-new_case.line('Date', 'NewCases',
+new_case_figure.line('Date', 'NewCases',
               color='green', legend_label='Kasus Baru Pulau Sumatera',
               source=sumatera_cds)
-new_case.line('Date', 'NewCases',
+new_case_figure.line('Date', 'NewCases',
               color='blue', legend_label='Kasus Baru Pulau Jawa',
               source=jawa_cds)
-new_case.line('Date', 'NewCases',
+new_case_figure.line('Date', 'NewCases',
               color='pink', legend_label='Kasus Baru Pulau Nusa',
               source=nusa_cds)
-new_case.line('Date', 'NewCases',
+new_case_figure.line('Date', 'NewCases',
               color='black', legend_label='Kasus Baru Pulau Kalimantan',
               source=kalimantan_cds)
-new_case.line('Date', 'NewCases',
+new_case_figure.line('Date', 'NewCases',
               color='yellow', legend_label='Kasus Baru Pulau Sulawesi',
               source=sulawesi_cds)
-new_case.line('Date', 'NewCases',
+new_case_figure.line('Date', 'NewCases',
               color='purple', legend_label='Kasus Baru Pulau Papua',
               source=papua_cds)
-new_case.line('Date', 'NewCases',
+new_case_figure.line('Date', 'NewCases',
               color='gray', legend_label='Kasus Baru Pulau Maluku',
               source=maluku_cds)
 
 # Definisikan legend dengan lokasi atas kiri
-tot_case.legend.location = 'top_left'
-new_case.legend.location = 'top_left'
+total_case_figure.legend.location = 'top_left'
+new_case_figure.legend.location = 'top_left'
 
 # Definisikan tooltips
 tooltips3 = [
@@ -225,13 +225,13 @@ tooltips4 = [
 ]
 
 # Masukkan hover ke diagram / figure
-tot_case.add_tools(HoverTool(tooltips=tooltips3,
+total_case_figure.add_tools(HoverTool(tooltips=tooltips3,
                              formatters={'@Date': 'datetime'}))
-new_case.add_tools(HoverTool(tooltips=tooltips4,
+new_case_figure.add_tools(HoverTool(tooltips=tooltips4,
                              formatters={'@Date': 'datetime'}))
 
 # Konfigurasi ukuran plot / diagram
-tot_case.plot_width = new_case.plot_width = 1000
+total_case_figure.plot_width = new_case.plot_width = 1000
 
 # Definisikan dua panel berisi total kasus dan kasus baru
 tot_case_panel = Panel(child=tot_case, title='Total Kasus')
