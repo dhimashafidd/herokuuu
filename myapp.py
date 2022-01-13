@@ -56,11 +56,17 @@ new_case_ind.yaxis.formatter = NumeralTickFormatter(format="00")
 # Definisikan line / proses render line
 total_case_ind.line('Date', 'TotalCases',
                   color='#CE1141', legend_label='Total Kasus di Seluruh Indonesia',
-                  source=indonesia_case,line_width=3)
+                  source=indonesia_case)
 
 new_case_ind.line('Date', 'NewCases',
                   color='#CE1141', legend_label='Kasus Terkini di Seluruh Indonesia',
-                  source=indonesia_case,line_width=3)
+                  source=indonesia_case)
+
+#Definisikan bars
+total_case_ind.vbar('Date', top= 'TotalRecovered', 
+                    legend_label='Total Pulih di Seluruh Indonesia', width=1, color="deepskyblue", alpha = 0.5, source=indonesia_case)
+new_case_ind.vbar('Date', top= 'NewRecovered', 
+                  legend_label='Pulih Terkini di Seluruh Indonesia', width=1, color="plum", alpha = 0.5, source=indonesia_case)
 
 # Definisikan legend dengan lokasi atas kiri
 total_case_ind.legend.location = 'top_left'
@@ -92,7 +98,7 @@ new_case_ind.add_tools(HoverTool(tooltips=tooltips2, formatters={
                        '@Date': 'datetime'}, renderers=[hover, hover2]))
 
 # Konfigurasi ukuran plot / diagram
-total_case_ind.plot_width = new_case_ind.plot_width = 1270
+total_case_ind.plot_width = new_case_ind.plot_width = 1000
 
 # Definisikan dua panel berisi total kasus dan Kasus Terkini
 total_case_ind_panel = Panel(child=total_case_ind, title='Total Kasus')
@@ -100,6 +106,9 @@ new_case_ind_panel = Panel(child=new_case_ind, title='Kasus Terkini')
 
 # Masukkan panel pada tabs button
 tabs = Tabs(tabs=[total_case_ind_panel, new_case_ind_panel])
+
+
+
 
 
 # Kasus untuk Pulau Jawa 
@@ -162,47 +171,53 @@ new_case.yaxis.formatter = NumeralTickFormatter(format="00")
 # Definisikan line / proses render line
 total_case.line('Date', 'TotalCases',
               color='green', legend_label='Total Kasus Pulau Sumatera',
-              source=sumatera_cds,line_width=3)
+              source=sumatera_cds)
 total_case.line('Date', 'TotalCases',
               color='blue', legend_label='Total Kasus Pulau Jawa',
-              source=jawa_cds,line_width=3)
+              source=jawa_cds)
 total_case.line('Date', 'TotalCases',
               color='pink', legend_label='Total Kasus Pulau Nusa',
-              source=nusa_cds,line_width=3)
+              source=nusa_cds)
 total_case.line('Date', 'TotalCases',
               color='black', legend_label='Total Kasus Pulau Kalimantan',
-              source=kalimantan_cds,line_width=3)
+              source=kalimantan_cds)
 total_case.line('Date', 'TotalCases',
               color='yellow', legend_label='Total Kasus Pulau Sulawesi',
-              source=sulawesi_cds,line_width=3)
+              source=sulawesi_cds)
 total_case.line('Date', 'TotalCases',
               color='purple', legend_label='Total Kasus Pulau Papua',
-              source=papua_cds,line_width=3)
+              source=papua_cds)
 total_case.line('Date', 'TotalCases',
               color='gray', legend_label='Total Kasus Pulau Maluku',
-              source=maluku_cds,line_width=3)
+              source=maluku_cds)
 
 new_case.line('Date', 'NewCases',
               color='green', legend_label='Kasus Terkini Pulau Sumatera',
-              source=sumatera_cds,line_width=3)
+              source=sumatera_cds)
 new_case.line('Date', 'NewCases',
               color='blue', legend_label='Kasus Terkini Pulau Jawa',
-              source=jawa_cds,line_width=3)
+              source=jawa_cds)
 new_case.line('Date', 'NewCases',
               color='pink', legend_label='Kasus Terkini Pulau Nusa',
-              source=nusa_cds,line_width=3)
+              source=nusa_cds)
 new_case.line('Date', 'NewCases',
               color='black', legend_label='Kasus Terkini Pulau Kalimantan',
-              source=kalimantan_cds,line_width=3)
+              source=kalimantan_cds)
 new_case.line('Date', 'NewCases',
               color='yellow', legend_label='Kasus Terkini Pulau Sulawesi',
-              source=sulawesi_cds,line_width=3)
+              source=sulawesi_cds)
 new_case.line('Date', 'NewCases',
               color='purple', legend_label='Kasus Terkini Pulau Papua',
-              source=papua_cds,line_width=3)
+              source=papua_cds)
 new_case.line('Date', 'NewCases',
               color='gray', legend_label='Kasus Terkini Pulau Maluku',
-              source=maluku_cds,line_width=3)
+              source=maluku_cds)
+
+#Definisikan bars
+total_case.vbar('Date', top= 'TotalCases',legend_label='Total Kasus di Seluruh Indonesia', 
+                width=1, color="lavender", alpha = 0.5, source=indonesia_case)
+new_case.vbar('Date', top= 'NewCases', legend_label='Kasus Terkini di Seluruh Indonesia', 
+              width=1, color="plum", alpha = 0.3, source=indonesia_case)
 
 # Definisikan legend dengan lokasi atas kiri
 total_case.legend.location = 'top_left'
@@ -228,7 +243,7 @@ new_case.add_tools(HoverTool(tooltips=tooltips4,
                              formatters={'@Date': 'datetime'}))
 
 # Konfigurasi ukuran plot / diagram
-total_case.plot_width = new_case.plot_width = 1270
+total_case.plot_width = new_case.plot_width = 1000
 
 # Definisikan dua panel berisi total kasus dan Kasus Terkini
 total_case_panel = Panel(child=total_case, title='Total Kasus')
