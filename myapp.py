@@ -78,10 +78,10 @@ tooltips2 = [
 ]
 
 # Defnisikan renderer sebagai hover
-hover_glyph = tot_case_ind.circle(x='Date', y='TotalCases', source=indonesia_cds,
+hover_glyph = tot_case_ind.circle(x='Date', y='TotalCases', source=indonesia_case,
                                   size=5, alpha=0,
                                   hover_fill_color='black', hover_alpha=0.5)
-hover_glyph2 = new_case_ind.circle(x='Date', y='NewCases', source=indonesia_cds,
+hover_glyph2 = new_case_ind.circle(x='Date', y='NewCases', source=indonesia_case,
                                    size=5, alpha=0,
                                    hover_fill_color='black', hover_alpha=0.5)
 
